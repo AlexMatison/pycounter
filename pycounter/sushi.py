@@ -27,7 +27,7 @@ def get_sushi_stats_raw(wsdl_url, start_date, end_date, requestor_id=None,
                         requestor_email=None, requestor_name=None,
                         customer_reference=None, customer_name=None,
                         report="JR1", release=4, sushi_dump=False,
-                        verify=True
+                        verify=True, proxies=None
                         ):
     """Get SUSHI stats for a given site in raw XML format.
 
@@ -55,6 +55,8 @@ def get_sushi_stats_raw(wsdl_url, start_date, end_date, requestor_id=None,
     :param sushi_dump: produces dump of XML to DEBUG logger
 
     :param verify: bool: whether to verify SSL certificates
+
+    :param proxies: dict: Proxy details for requests
 
     """
     root = etree.Element("{%(SOAP-ENV)s}Envelope" % NS, nsmap=NS)
@@ -100,7 +102,8 @@ def get_sushi_stats_raw(wsdl_url, start_date, end_date, requestor_id=None,
     response = requests.post(url=wsdl_url,
                              headers=headers,
                              data=payload,
-                             verify=verify)
+                             verify=verify,
+                             proxies=proxies)
 
     if sushi_dump:
         logger.debug("SUSHI DUMP: request: %s \n\n response: %s",

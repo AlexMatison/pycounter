@@ -184,10 +184,10 @@ class CounterReport(object):
         pdf_usage = 0
         html_usage = 0
 
-        number_of_months = len(
-            arrow.Arrow.range('month',
+        range_of_months = list(arrow.Arrow.range('month',
                               arrow.Arrow.fromdate(self.period[0]),
                               arrow.Arrow.fromdate(self.period[1])))
+        number_of_months = len(range_of_months)
         month_data = [0] * number_of_months
         for pub in self.pubs:
             if pub.metric != metric:
